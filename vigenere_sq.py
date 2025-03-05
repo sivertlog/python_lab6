@@ -2,13 +2,6 @@ def vigenere_header(alphabet):
     alpha_len = len(alphabet)
     print("|   ", end='')
     for i in range(alpha_len):
-        if i < 9:
-            print(f"| {i+1}", end=' ')
-        else:
-            print(f"| {i+1}", end='')
-    print("|")
-    print("|   ", end='')
-    for i in range(alpha_len):
         print(f"| {alphabet[i]}", end=' ')
     print("|")
     print(f"{'|---'*(alpha_len + 1)}|")
@@ -85,7 +78,8 @@ while True:
     1)Encrypt Message
     2)Decrypt Message
     3)Change Keyword(current:{key})
-    4)Exit Program
+    4)View Vigenère Square
+    5)Exit Program
     """)
     print()
     try:
@@ -122,4 +116,7 @@ while True:
             else:
                 print("*Invalid keyword*")
     elif selection == 4:
+        vigenere_sq(alphabet)
+        enter()
+    elif selection == 5:
         break
