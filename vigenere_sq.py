@@ -1,6 +1,3 @@
-from idlelib.debugger_r import close_subprocess_debugger
-
-
 def vigenere_header(alphabet):
     alpha_len = len(alphabet)
     print("|   ", end='')
