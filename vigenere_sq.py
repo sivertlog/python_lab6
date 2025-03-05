@@ -1,3 +1,6 @@
+from idlelib.debugger_r import close_subprocess_debugger
+
+
 def vigenere_header(alphabet):
     alpha_len = len(alphabet)
     print("|   ", end='')
@@ -47,7 +50,7 @@ def encrypt_vigenere(key, plaintext, alphabet):
     for c in plaintext:
         if c == " ":
             cipher_text += " "
-        elif (c.upper() in alphabet):
+        elif c.upper() in alphabet:
             cipher_text += index_to_letter(vigenere_index(key[counter%len(key)], c, alphabet), alphabet)
             counter += 1
     return cipher_text
@@ -58,23 +61,68 @@ def decrypt_vigenere(key, cipher_text, alphabet):
     for c in cipher_text:
         if c == " ":
             plain_text += " "
-        elif (c.upper() in alphabet):
+        elif c.upper() in alphabet:
             plain_text += index_to_letter(undo_vigenere_index(key[counter%len(key)], c, alphabet), alphabet)
             counter += 1
     return plain_text
 
+def check_valid_key(key, alphabet):
+    for i in key:
+        if not i in alphabet: return False
+    return len(key) > 0
+
+def enter(prompt="Press ENTER to continue.."):
+    input(prompt)
+
+# Var
 key = "BLUESMURF"
-message = "Hello World, I am here"
-alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-#vigenere_sq(alphabet)
+# Main
+while True:
+    print(f"""
+    *******************
+    * Vigenère Cipher *
+    *******************
 
-print()
+    1)Encrypt Message
+    2)Decrypt Message
+    3)Change Keyword(current:{key})
+    4)Exit Program
+    """)
+    print()
+    try:
+        selection = int(input("Please enter a number from the list: "))
+    except ValueError:
+        selection = 0
 
+    if selection == 1:
+        message = input("Please enter your message: ")
+        print(f"""
+        Encrypted message:
+        
+        {encrypt_vigenere(key, message, alphabet)}
+        
+        """)
+        enter()
+    elif selection == 2:
+        message = input("Please enter your encrypted message: ")
+        print(f"""
+        Decrypted message:
 
-a = message
-print(a)
-b = encrypt_vigenere(key, a, alphabet)
-print(b)
-c = decrypt_vigenere(key, b, alphabet)
-print(c)
+        {decrypt_vigenere(key, message, alphabet)}
+
+        """)
+        enter()
+    elif selection == 3:
+        while True:
+            new_key = input("Please enter a new keyword using only letters in the alphabet: ")
+            if check_valid_key(new_key.upper(), alphabet):
+                key = new_key.upper()
+                print("New keyword:", key)
+                enter()
+                break
+            else:
+                print("*Invalid keyword*")
+    elif selection == 4:
+        break
