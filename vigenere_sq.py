@@ -75,8 +75,9 @@ while True:
     3)Change Keyword(current:{key})
     4)View Vigenère Square
     5)Exit Program
+    
     """)
-    print()
+
     try:
         selection = int(input("Please enter a number from the list: "))
     except ValueError:
