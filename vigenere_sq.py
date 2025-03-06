@@ -56,11 +56,6 @@ def decrypt_vigenere(key, cipher_text, alphabet):
             counter += 1
     return plain_text
 
-def check_valid_key(key, alphabet):
-    for i in key:
-        if not i in alphabet: return False
-    return len(key) > 0
-
 def enter(prompt="Press ENTER to continue.."):
     input(prompt)
 
@@ -107,14 +102,15 @@ while True:
         enter()
     elif selection == 3:
         while True:
-            new_key = input("Please enter a new keyword using only letters in the alphabet: ")
-            if check_valid_key(new_key.upper(), alphabet):
-                key = new_key.upper()
+            new_key = input("Please enter a new keyword using only letters in the alphabet: ").upper()
+            print(new_key)
+            if (all(i in alphabet for i in new_key)) and len(new_key) > 0:
+                key = new_key
                 print("New keyword:", key)
                 enter()
                 break
             else:
-                print("*Invalid keyword*")
+                print("*Invalid Keyword*")
     elif selection == 4:
         vigenere_sq(alphabet)
         enter()
